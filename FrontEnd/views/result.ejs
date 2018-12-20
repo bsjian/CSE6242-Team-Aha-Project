@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link rel="stylesheet" href="/styles/result.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<head>
+  <title></title>
+</head>
+
+<body>
+  	<header class="cd-main-header">
+		<div class="cd-main-header__logo"><p>CSE 6242 Group Project</p></div>
+
+		<nav class="cd-main-nav js-main-nav">
+			<ul class="cd-main-nav__list">
+				<!-- inser more links here -->
+				<li><a href="/">Home</a></li>
+				<li><a href="/#search">Search</a></li>
+				<li><a href="/#problem">About</a></li>
+			</ul>
+		</nav> <!-- cd-main-nav -->
+	</header>
+
+  <div id="mapid"></div>
+  <script type="text/javascript">
+  
+  
+   
+  
+    var mymap = L.map('mapid',{zoomControl: false}).setView([33.7706675, -84.3661573], 13);
+     L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=d8429bd8f20b40fd8c2b693b671d26c8', {
+    	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    	apikey: '<your apikey>',
+    	maxZoom: 22
+    }).addTo(mymap);
+    L.control.zoom({
+         position:'bottomleft'
+    }).addTo(mymap);
+
+
+    function popUp(feature) {
+      var customOptions =
+        {
+        'maxWidth': '500',
+        'className' : 'custom'
+        }
+      var coor = feature.geometry.coordinates;
+
+      
+      //adding places for pop up
+      var greenIcon = new L.Icon({
+        iconUrl: '/pics/green.png',
+        iconSize: [40, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+      var apartIcon = new L.Icon({
+        iconUrl: '/pics/apt.png',
+        iconSize: [40, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+      
+      for (var i = 0; i < Object.keys(feature.properties.places).length; i++){
+        var dots = [];
+        dots.push(coor);
+        var placeDIV = '<div class="card border-0" style="width: 18rem;"><div class="card-body">';
+        placeDIV += '<p class="card-text">The Nearest Place: ' + feature.properties.places[i].cloest_store_name +'</p>';
+        placeDIV += '</div></div>';
+        // var placeDIV = "<h1> Closet Place Name: " + feature.properties.places[i].cloest_store_name + "</h1>";
+        var placecoor = [];
+        if (feature.properties.places[i].cloest_store_lat == "" || feature.properties.places[i].cloest_store_lng == "") continue;
+        placecoor.push(feature.properties.places[i].cloest_store_lat);
+        placecoor.push(feature.properties.places[i].cloest_store_lng);
+        L.marker(placecoor, {icon: greenIcon}).addTo(mymap).bindPopup(placeDIV,customOptions);
+        
+        dots.push(placecoor);
+        console.log(dots);
+        // var polyline = L.polyline(latlngs, {color: 'red'}).addTo(mymap);
+
+        // L.polyline(connectDots(dots)).addTo(mymap);
+
+      }
+
+      var crimeScore = feature.properties.crimeScore;
+      var convenientScore = (feature.properties["transit score"]+feature.properties["walk score"]+feature.properties["bike score"])/3;
+      
+
+      
+      var popupDIV = "<div class='card border-0'> <div class='card-body'><h5 class='Card title'>"+ feature.properties.title + " </h5>";
+      popupDIV += "<p class='card-text'>" + feature.properties.address +"</p>";
+      popupDIV += "<p class='card-text'> Price: " + feature.properties["facts and features"] +"</p></div>";
+      popupDIV += "<ul class='list-group list-group-flush'><li class='list-group-item'> Convenient Score: " + Math.round(convenientScore) + "</li>";
+      popupDIV += "<li class='list-group-item'>Crime Score: " +  Math.round(feature.properties.criminal.crime_score) + "</li>";
+      popupDIV +=  "<li class='list-group-item'>Avarage Rating: " + feature.properties["rating"] + "</li></ul>";
+      popupDIV += "<div class='card-body'><a href=" + feature.properties.url + " class='card-link'>Check it on Zillow</a></div></div>";
+      console.log(popupDIV);
+      // var popupDIV = "<h1>" + feature.properties.title + "</h1>";
+      // popupDIV += "<p> Price: " + feature.properties["facts and features"]  + "</p>";
+      // popupDIV += "<p> Address: " + feature.properties.address + "</p>";
+      // popupDIV += "<p> Convenient Score: " + Math.round(convenientScore) + "</p>";
+      // popupDIV += "<p> Crime Score: " + Math.round(feature.properties.criminal.crime_score) + "</p>";
+      // popupDIV += "<p> Crime Score: " + Math.round(feature.properties.criminal.crime_score) + "</p>";
+      // if(feature.properties["rating"] != 0){
+      //   popupDIV += "<p> Avarage Rating: " + feature.properties["rating"] + "</p>";
+      // }
+      
+      
+      
+      L.marker(coor, {icon: apartIcon}).addTo(mymap)
+        .bindPopup(popupDIV,customOptions);
+    }
+    var geojsonLayer = new L.GeoJSON.AJAX("curgeo.json", {
+      onEachFeature: popUp
+    });
+
+    geojsonLayer.addTo(mymap);
+  </script>
+</body>
+
+</html>

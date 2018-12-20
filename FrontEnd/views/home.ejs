@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link rel="stylesheet" href="/styles/home.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+  	<header class="cd-main-header">
+		<div class="cd-main-header__logo"><p>CSE 6242 Group Project</p></div>
+
+		<nav class="cd-main-nav js-main-nav">
+			<ul class="cd-main-nav__list">
+				<!-- inser more links here -->
+				<li><a href="#problem">About</a></li>
+				<li><a href="#method">Method</a></li>
+				<li><a href="#search">Try It Out</a></li>
+			</ul>
+		</nav> <!-- cd-main-nav -->
+	</header>
+<main>
+		<div class="cd-fixed-bg cd-fixed-bg--1">
+			<div class="cd-fixed-bg__content">
+				<h1>Rental Recommendation for Commuters</h1>
+				</a>
+			</div>
+		</div> <!-- cd-fixed-bg -->
+
+		<div id="problem" class="cd-scrolling-bg cd-scrolling-bg--color-2">
+			<div class="cd-scrolling-bg__content">
+			  <h2>What's the Problem?</h2>
+			  <p>
+Nowadays, more than 90% people use web
+systems to buy or sell their real estates. But none
+of current systems is designed for meeting all
+special needs, such as safety concern and
+transportation requirement.        </p>
+
+        <p>
+        So we want to build a housing rental recommendation system for those who commutes daily, which can recommend housing to users their personal references, such as basic information, safety anticipation, and transportation requirement.
+        </p>
+
+			</div> <!-- cd-scrolling-bg__content -->
+		</div> <!-- cd-scrolling-bg -->
+
+		<div class="cd-fixed-bg cd-fixed-bg--2">
+			<h2>What We've Done</h2>
+		</div> <!-- cd-fixed-bg -->
+
+		<div id="method" class="cd-scrolling-bg cd-scrolling-bg--color-3">
+			<div class="cd-scrolling-bg__content">
+			  <h2>
+			    Dataset Collection
+			  </h2>
+			  <p><strong>Crime Data:</strong> Downloaded 11 types crime data of Atlanta Police Department from 2009 to 2018.<br>
+			  <strong>Map Data:</strong> Collected direction, distance, transportation data from Google map API.<br>
+			  <strong>Zillow Data:</strong> Used Python scraping to access and download each apartment’s basic information.<br>
+			  <strong>Yelp Data:</strong> Used Python scraping to apartments’information about reviews and rating.<br>
+        <strong>Walkable Data:</strong> used Python scraping to access apartments’ convenience for transportation. </p>
+        <h2>
+			    Recommending
+			  </h2>
+        <p>We access ranking based on users’ basic preference
+form Zillow, reviews and ratings from Yelp,
+amount of types of crime to qualify the safety
+anticipation of apartments, walkable score data
+for qualifying convenience of nearby transportation
+and direction information from Google Map
+API to fit users’ demand of specific places. </p>
+        <h2>
+			    Visualization
+			  </h2>
+			  <p>
+			    our website can be divided into two main
+functional parts. The first one is obtaining filter
+options from users and the second is display our
+result in map. The fundamental tools we use are
+HTML5 with CSS3 and JavaScript. Meanwhile,
+some powerful library like Leafletjs are
+used to help us build the website. Whenever we
+receive a search request from user, we will send
+a HTTP request to our back‐end server to get the
+recommendation result.
+			  </p>
+			  <br>
+			  <div id="block">
+  			  <p>
+  			    Demo Input:<br>
+  			    Address: 470 16th st nw, Atlanta, GA 30363<br>
+  			    Type: Apartment<br>
+  			    Beds: 1<br>
+  			    Baths: 1<br>
+  			    Pets: Yes<br>
+  			    Parking: Yes<br>
+  			    Laundry: Yes<br>
+  			    Price Range: 500 - 5000<br>
+  			    Rate: 3.5<br>
+  			    Nearby Place: gym<br>
+  			    Traveling Method: Walking<br>
+  			    Time Limit: 20 minutes<br>
+  			  </p>
+  			  <div id="demo1"></div>
+			  </div>
+        <br>
+        <h2>
+			    Innovation
+			  </h2>
+			  <p>
+			    Our websites can provide renting recommendations
+based on users’ based on their requirements
+of daily commuting, safety concern and
+other basic conditions. and give users more
+selection filters to choose their living place. And
+our user interface is more simple and userfriendly
+			  </p>
+
+			</div> <!-- cd-scrolling-bg__content -->
+		</div> <!-- cd-scrolling-bg -->
+
+		<div class="cd-fixed-bg cd-fixed-bg--3">
+			<h2>Try It Out!</h2>
+		</div> <!-- cd-fixed-bg -->
+
+		<div id="search" class="cd-scrolling-bg cd-scrolling-bg--color-1">
+			<div class="cd-scrolling-bg__content">
+		  
+      <form action="/search" method="get">
+      <div class = "row">
+        <div class="col-lg-12 form-group">
+          <label for="address">Address</label>
+          <input class="form-control" type="text" name="address" style="height:50px;" 
+          placeholder="350 Ferst Dr NW, Atlanta, GA 30313" autocomplete="off" required />
+        </div>
+      </div>
+
+    
+    <div class = "row">
+      <div class="col-md-3 form-group">
+        <label for="type">Home Type</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="type" placeholder="1" autocomplete="off">
+            <option value="a&h">All Types</option>
+            <option value="a">Apartment</option>
+            <option value="h">House</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="beds">Beds</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="beds" placeholder="1" autocomplete="off">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>      
+      <div class="col-md-3 form-group">
+        <label for="baths">Baths</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="baths" placeholder="1" autocomplete="off">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="pets">Pets Allowed</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="pets" placeholder="1" autocomplete="off">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class = "row">
+      
+      <div class="col-md-3 form-group">
+        <label for="parking">Parking</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="parking" placeholder="1" autocomplete="off">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="laundry">Laundry</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="parking" placeholder="1" autocomplete="off">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="price">Price Range</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="price" placeholder="500-1000" autocomplete="off">
+            <option value="0-100000">Any Price</option>
+            <option value="0-500">0-500</option>
+            <option value="500-1000">500-1000</option>
+            <option value="1000-1500">1000-1500</option>
+            <option value="1500-2000">1500-2000</option>
+            <option value="2000-3000">2000-3000</option>
+            <option value="3000-100000">Above 3000</option>
+          </select>
+        </div>
+      </div>  
+      <div class="col-md-3 form-group">
+        <label for="rate">Avarage Rating</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="rate" placeholder="1" autocomplete="off">
+            <option value="0">Choose Stars</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Stars</option>
+          </select>
+        </div>
+      </div>
+    </div>
+      
+    <div class="row">
+      
+      
+      <div class="col-lg-12 form-group">
+        <label for="palces">Nearby Place</label>
+        <input class="form-control" type="text" name="places" style="height:50px;"
+        placeholder="gym, library, resturant" autocomplete="off" required />
+      </div>
+    </div>
+    <div class = "row">
+      <div class="col-md-4 form-group">
+        <label for="travelling">Travelling methods</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="travelling" placeholder="1" autocomplete="off">
+            <option value="walking">Walking</option>
+            <option value="driving">Driving</option>
+            <option value="biking">Biking</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="col-md-4 form-group">
+        <label for="time_limit">Time Limit on Travelling</label>
+        <div class="custom-select" style="width:180px;">
+          <select class="form-control" type="text" name="time_limit" placeholder="1" autocomplete="off">
+            <option value="5">5 Minutes</option>
+            <option value="10">10 Minutes</option>
+            <option value="20">20 Minutes</option>
+            <option value="30">30 Minutes</option>
+            <option value="60">1 Hour</option>
+            <option value="120">2 Hour</option>
+          </select>
+        </div>
+      </div>      
+      <div class="col-md-4 form-group">
+        <label>　</label>
+        <button class="center-block btn btn-success" style="width:180px; height:50px;font-size:2rem;font-family:arial;">Search Now!</button>
+      </div>
+    </div>
+      
+    <br><br>
+
+
+
+</form>
+			
+			</div> <!-- cd-scrolling-bg__content -->
+		</div> <!-- cd-scrolling-bg -->
+
+
+</main>
+
+
+
+
+<script type="text/javascript" src="/js/select.js"></script>
+<script type="text/javascript">
+
+    var map_demo_1 = L.map('demo1',{zoomControl: false}).setView([33.7914854, -84.4000398], 13);
+     L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=d8429bd8f20b40fd8c2b693b671d26c8', {
+    	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    	apikey: '<your apikey>',
+    	maxZoom: 22
+    }).addTo(map_demo_1);
+    L.control.zoom({
+         position:'bottomleft'
+    }).addTo(map_demo_1);
+
+    function popUp(feature) {
+      var customOptions =
+        {
+        'maxWidth': '500',
+        'className' : 'custom'
+        }
+      var coor = feature.geometry.coordinates;
+      //adding places for pop up
+      var greenIcon = new L.Icon({
+        iconUrl: '/pics/green.png',
+        iconSize: [40, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+      var apartIcon = new L.Icon({
+        iconUrl: '/pics/apt.png',
+        iconSize: [40, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+      
+      for (var i = 0; i < Object.keys(feature.properties.places).length; i++){
+        var dots = [];
+        dots.push(coor);
+        var placeDIV = '<div class="card border-0" style="width: 18rem;"><div class="card-body">';
+        placeDIV += '<p class="card-text">The Nearest Place: ' + feature.properties.places[i].cloest_store_name +'</p>';
+        placeDIV += '</div></div>';
+        // var placeDIV = "<h1> Closet Place Name: " + feature.properties.places[i].cloest_store_name + "</h1>";
+        var placecoor = [];
+        if (feature.properties.places[i].cloest_store_lat == "" || feature.properties.places[i].cloest_store_lng == "") continue;
+        placecoor.push(feature.properties.places[i].cloest_store_lat);
+        placecoor.push(feature.properties.places[i].cloest_store_lng);
+        L.marker(placecoor, {icon: greenIcon}).addTo(map_demo_1).bindPopup(placeDIV,customOptions);
+        
+        dots.push(placecoor);
+        console.log(dots);
+        // var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map_demo_1);
+
+        // L.polyline(connectDots(dots)).addTo(map_demo_1);
+
+      }
+
+      var crimeScore = feature.properties.crimeScore;
+      var convenientScore = (feature.properties["transit score"]+feature.properties["walk score"]+feature.properties["bike score"])/3;
+      
+
+      
+      var popupDIV = "<div class='card border-0'> <div class='card-body'><h5 class='Card title'>"+ feature.properties.title + " </h5>";
+      popupDIV += "<p class='card-text'>" + feature.properties.address +"</p>";
+      popupDIV += "<p class='card-text'> Price: " + feature.properties["facts and features"] +"</p></div>";
+      popupDIV += "<ul class='list-group list-group-flush'><li class='list-group-item'> Convenient Score: " + Math.round(convenientScore) + "</li>";
+      popupDIV += "<li class='list-group-item'>Crime Score: " +  Math.round(feature.properties.criminal.crime_score) + "</li>";
+      popupDIV +=  "<li class='list-group-item'>Avarage Rating: " + feature.properties["rating"] + "</li></ul>";
+      popupDIV += "<div class='card-body'><a href=" + feature.properties.url + " class='card-link'>Check it on Zillow</a></div></div>";
+      console.log(popupDIV);
+      // var popupDIV = "<h1>" + feature.properties.title + "</h1>";
+      // popupDIV += "<p> Price: " + feature.properties["facts and features"]  + "</p>";
+      // popupDIV += "<p> Address: " + feature.properties.address + "</p>";
+      // popupDIV += "<p> Convenient Score: " + Math.round(convenientScore) + "</p>";
+      // popupDIV += "<p> Crime Score: " + Math.round(feature.properties.criminal.crime_score) + "</p>";
+      // popupDIV += "<p> Crime Score: " + Math.round(feature.properties.criminal.crime_score) + "</p>";
+      // if(feature.properties["rating"] != 0){
+      //   popupDIV += "<p> Avarage Rating: " + feature.properties["rating"] + "</p>";
+      // }
+      
+      
+      
+      L.marker(coor, {icon: apartIcon}).addTo(map_demo_1)
+        .bindPopup(popupDIV,customOptions);
+    }
+    
+    var geojsonLayer = new L.GeoJSON.AJAX("demo1.json", {
+      onEachFeature: popUp
+    });
+
+    geojsonLayer.addTo(map_demo_1);
+  </script>
+
+
+</body>
+</html>

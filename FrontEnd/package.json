@@ -1,0 +1,21 @@
+{
+  "name": "housing-rec",
+  "version": "1.0.0",
+  "description": "This is our housing app",
+  "main": "app.js",
+  "scripts": {
+   "start": "node app.js"
+  },
+  "author": "Bosheng Jian",
+  "license": "ISC",
+  "dependencies": {
+    "@syncfusion/ej2-dropdowns": "^16.3.34",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "leaflet-geosearch": "^2.7.0"
+  },
+  "engines": {
+    "node": "8.14.0"
+  }
+}
