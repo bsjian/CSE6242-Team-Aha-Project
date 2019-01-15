@@ -68,7 +68,7 @@ To execute the project's backend, first fill in your Google API key in line 5 of
 
 ## FrontEnd
 
-To see the app directly, go to [https://cse6242-224423.appspot.com/](https://cse6242-224423.appspot.com/)
+To see the app directly, go to [https://limitless-shelf-79345.herokuapp.com/](https://limitless-shelf-79345.herokuapp.com/)
 
 ## Features
 
