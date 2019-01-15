@@ -1,4 +1,4 @@
-# Rental-Recommendation-Web-System
+# Housing Recommendation for Commuters  
 A housing rental recommendation website for those who commutes daily, which can provide renting recommendations based on users’ personal references, such as basic information, safety anticipation, and transportation requirement.
 
 To run our project locally:
